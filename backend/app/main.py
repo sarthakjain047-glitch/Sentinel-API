@@ -10,7 +10,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
-DB = os.getenv("DATABASE_PATH", "/data/sentinelapi.db")
+DB = os.getenv("DATABASE_PATH", "./sentinelapi.db")
 Path(DB).parent.mkdir(parents=True, exist_ok=True)
 app = FastAPI(title="SentinelAPI", version="1.0.0")
 
