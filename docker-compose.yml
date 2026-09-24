@@ -1,0 +1,22 @@
+services:
+  demo-target:
+    build: ./demo_target
+    container_name: sentinelapi-demo-target
+    ports:
+      - "8001:8001"
+    environment:
+      - PORT=8001
+  sentinelapi:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: sentinelapi
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_PATH=/data/sentinelapi.db
+      - DEMO_TARGET_URL=http://demo-target:8001
+    volumes:
+      - ./data:/data
+    depends_on:
+      - demo-target
