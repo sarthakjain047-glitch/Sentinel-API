@@ -12,7 +12,7 @@ from pydantic import BaseModel, Field
 
 DB = os.getenv("DATABASE_PATH", "./sentinelapi.db")
 Path(DB).parent.mkdir(parents=True, exist_ok=True)
-app = FastAPI(title="SentinelAPI", version="1.0.0")
+0app = FastAPI(title="SentinelAPI", version="1.0.0")
 
 
 def db():
@@ -144,8 +144,8 @@ async def run_scan(scan_id: str, req: ScanRequest):
 
 @app.get("/")
 def index(): return FileResponse(str(FRONTEND_DIR / "index.html"))
-app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
-
+if Path(FRONTEND_DIR).exists():
+    app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
 @app.post("/api/scans")
 async def create_scan(req: ScanRequest):
     if not req.authorization_confirmed: raise HTTPException(400, "You must confirm authorization to test this target")
